@@ -91,7 +91,7 @@ export default function Calculator({ encodedData }: { encodedData: string }) {
   };
 
   return (
-    <div className='space-y-6'>
+    <div className='space-y-6 bg-white text-black'>
       <div className='space-y-4'>
         <h2 className='text-xl font-semibold'>选择你吃的食物</h2>
         <ul className='space-y-2'>
@@ -127,7 +127,10 @@ export default function Calculator({ encodedData }: { encodedData: string }) {
         <ul className='space-y-2'>
           {extraFees.map((fee) => (
             <li key={fee.id} className='flex justify-between items-center border p-2 rounded'>
-              <span>{fee.name}</span>
+              <span>
+                {fee.name}
+                {fee.type === 'perPerson' ? ` (人数: ${fee.expectedCount})` : ''}
+              </span>
               <span>¥{fee.amount}</span>
             </li>
           ))}
