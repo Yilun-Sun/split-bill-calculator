@@ -1,10 +1,14 @@
 import Calculator from '@/components/Calculator';
 
-export default function CalculatePage({ params }: { params: { data: string } }) {
+type Params = Promise<{ data: string }>;
+
+export default async function CalculatePage({ params }: { params: Params }) {
+  const { data } = await params;
+
   return (
     <main className='min-h-screen p-4 max-w-2xl mx-auto'>
       <h1 className='text-2xl font-bold text-center mb-8'>计算分账</h1>
-      <Calculator encodedData={params.data} />
+      <Calculator encodedData={data} />
     </main>
   );
 }

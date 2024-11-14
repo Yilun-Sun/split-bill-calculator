@@ -31,6 +31,7 @@ export default function Calculator({ encodedData }: { encodedData: string }) {
   const [items, setItems] = useState<ItemWithSelection[]>([]);
   const [extraFees, setExtraFees] = useState<ExtraFee[]>([]);
   const [total, setTotal] = useState(0);
+  const [copyStatus, setCopyStatus] = useState<string>('复制总额');
 
   useEffect(() => {
     try {
@@ -83,6 +84,12 @@ export default function Calculator({ encodedData }: { encodedData: string }) {
     setTotal(total);
   }, [items, extraFees]);
 
+  const copyTotalToClipboard = () => {
+    navigator.clipboard.writeText(`${total.toFixed(2)}`);
+    setCopyStatus('已复制');
+    setTimeout(() => setCopyStatus('复制总额'), 2000);
+  };
+
   return (
     <div className='space-y-6'>
       <div className='space-y-4'>
@@ -127,7 +134,17 @@ export default function Calculator({ encodedData }: { encodedData: string }) {
         </ul>
       </div>
 
-      <div className='text-xl font-bold text-center'>你需要支付: ¥{total.toFixed(2)}</div>
+      <div className='text-xl font-bold text-center flex justify-center items-center'>
+        你需要支付: ¥{total.toFixed(2)}
+        <button
+          onClick={copyTotalToClipboard}
+          className={`ml-4 ${
+            copyStatus === '已复制' ? 'bg-green-500 hover:bg-green-700' : 'bg-blue-500 hover:bg-blue-700'
+          } text-white font-bold py-2 px-4 rounded`}
+        >
+          {copyStatus}
+        </button>
+      </div>
     </div>
   );
 }
