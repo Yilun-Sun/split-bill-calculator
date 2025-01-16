@@ -53,12 +53,12 @@ export default function Calculator({ encodedData }: { encodedData: string }) {
         if (item.id === id) {
           const newCount = Math.max(
             0,
-            Math.min(item.quantity, item.selectedCount + delta)
+            Math.min(item.quantity, item.selectedCount + delta),
           );
           return { ...item, selectedCount: newCount };
         }
         return item;
-      })
+      }),
     );
   };
 
@@ -76,7 +76,7 @@ export default function Calculator({ encodedData }: { encodedData: string }) {
 
     const totalSelectedItems = items.reduce(
       (sum, item) => sum + item.selectedCount,
-      0
+      0,
     );
 
     const extraFeesPerOrder =
