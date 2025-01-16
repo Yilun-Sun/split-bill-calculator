@@ -51,11 +51,14 @@ export default function Calculator({ encodedData }: { encodedData: string }) {
     setItems(
       items.map((item) => {
         if (item.id === id) {
-          const newCount = Math.max(0, Math.min(item.quantity, item.selectedCount + delta));
+          const newCount = Math.max(
+            0,
+            Math.min(item.quantity, item.selectedCount + delta),
+          );
           return { ...item, selectedCount: newCount };
         }
         return item;
-      })
+      }),
     );
   };
 
@@ -71,9 +74,13 @@ export default function Calculator({ encodedData }: { encodedData: string }) {
         return sum + fee.amount / expectedCount;
       }, 0);
 
-    const totalSelectedItems = items.reduce((sum, item) => sum + item.selectedCount, 0);
+    const totalSelectedItems = items.reduce(
+      (sum, item) => sum + item.selectedCount,
+      0,
+    );
 
-    const extraFeesPerOrder = totalSelectedItems > 0 ? perOrderFeesTotal / totalSelectedItems : 0;
+    const extraFeesPerOrder =
+      totalSelectedItems > 0 ? perOrderFeesTotal / totalSelectedItems : 0;
 
     const total =
       items.reduce((sum, item) => {
@@ -91,30 +98,36 @@ export default function Calculator({ encodedData }: { encodedData: string }) {
   };
 
   return (
-    <div className='space-y-6 bg-white text-black'>
-      <div className='space-y-4'>
-        <h2 className='text-xl font-semibold'>选择你吃的食物</h2>
-        <ul className='space-y-2'>
+    <div className="space-y-6 bg-white text-black">
+      <div className="space-y-4">
+        <h2 className="text-xl font-semibold">选择你吃的食物</h2>
+        <ul className="space-y-2">
           {items.map((item) => (
-            <li key={item.id} className='flex justify-between items-center border p-2 rounded'>
+            <li
+              key={item.id}
+              className="flex justify-between items-center border p-2 rounded"
+            >
               <span>
-                {item.name} - ¥{(item.price / item.quantity).toFixed(2)}/个 (库存: {item.quantity})
+                {item.name} - ¥{(item.price / item.quantity).toFixed(2)}/个
+                (库存: {item.quantity})
               </span>
-              <div className='flex items-center gap-2'>
+              <div className="flex items-center gap-2">
                 <button
                   onClick={() => updateQuantity(item.id, -1)}
-                  className='bg-gray-200 p-1 rounded'
+                  className={`bg-gray-200 p-1 rounded ${
+                    item.selectedCount <= 0 ? 'cursor-not-allowed' : ''
+                  }`}
                   disabled={item.selectedCount <= 0}
                 >
-                  <MinusIcon className='h-5 w-5' />
+                  <MinusIcon className="h-5 w-5" />
                 </button>
                 <span>{item.selectedCount}</span>
                 <button
                   onClick={() => updateQuantity(item.id, 1)}
-                  className='bg-gray-200 p-1 rounded'
+                  className="bg-gray-200 p-1 rounded"
                   disabled={item.selectedCount >= item.quantity}
                 >
-                  <PlusIcon className='h-5 w-5' />
+                  <PlusIcon className="h-5 w-5" />
                 </button>
               </div>
             </li>
@@ -122,14 +135,19 @@ export default function Calculator({ encodedData }: { encodedData: string }) {
         </ul>
       </div>
 
-      <div className='space-y-4'>
-        <h2 className='text-xl font-semibold'>额外费用</h2>
-        <ul className='space-y-2'>
+      <div className="space-y-4">
+        <h2 className="text-xl font-semibold">额外费用</h2>
+        <ul className="space-y-2">
           {extraFees.map((fee) => (
-            <li key={fee.id} className='flex justify-between items-center border p-2 rounded'>
+            <li
+              key={fee.id}
+              className="flex justify-between items-center border p-2 rounded"
+            >
               <span>
                 {fee.name}
-                {fee.type === 'perPerson' ? ` (人数: ${fee.expectedCount})` : ''}
+                {fee.type === 'perPerson'
+                  ? ` (人数: ${fee.expectedCount})`
+                  : ''}
               </span>
               <span>¥{fee.amount}</span>
             </li>
@@ -137,12 +155,14 @@ export default function Calculator({ encodedData }: { encodedData: string }) {
         </ul>
       </div>
 
-      <div className='text-xl font-bold text-center flex justify-center items-center'>
+      <div className="text-xl font-bold text-center flex justify-center items-center">
         你需要支付: ¥{total.toFixed(2)}
         <button
           onClick={copyTotalToClipboard}
           className={`ml-4 ${
-            copyStatus === '已复制' ? 'bg-green-500 hover:bg-green-700' : 'bg-blue-500 hover:bg-blue-700'
+            copyStatus === '已复制'
+              ? 'bg-green-500 hover:bg-green-700'
+              : 'bg-blue-500 hover:bg-blue-700'
           } text-white font-bold py-2 px-4 rounded`}
         >
           {copyStatus}

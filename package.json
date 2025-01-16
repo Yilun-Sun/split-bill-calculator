@@ -6,7 +6,8 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "prettier:fix": "pnpm prettier -w ."
   },
   "dependencies": {
     "@heroicons/react": "^2.1.5",
@@ -17,12 +18,14 @@
     "uuid": "^11.0.3"
   },
   "devDependencies": {
+    "@rightcapital/prettier-config": "^7.1.12",
     "@types/node": "^20",
-    "@types/react": "^18",
-    "@types/react-dom": "^18",
+    "@types/react": "^18.3.12",
+    "@types/react-dom": "^18.3.1",
     "eslint": "^8",
     "eslint-config-next": "15.0.3",
     "postcss": "^8",
+    "prettier": "^3.4.2",
     "tailwindcss": "^3.4.1",
     "typescript": "^5"
   }
