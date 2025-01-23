@@ -1,0 +1,16 @@
+{
+  "name": "分账计算器",
+  "short_name": "分账计算",
+  "description": "一个简单易用的分账计算工具，帮助您快速计算和分配账单",
+  "icons": [
+    {
+      "src": "/logo.svg",
+      "type": "image/svg+xml",
+      "sizes": "any"
+    }
+  ],
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#ffffff"
+}
