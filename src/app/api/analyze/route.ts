@@ -1,5 +1,7 @@
 import OpenAI from 'openai';
 
+export const maxDuration = 30;
+
 // 获取百度 access token 的函数
 async function getBaiduAccessToken() {
   const response = await fetch(
