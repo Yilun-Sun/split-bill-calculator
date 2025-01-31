@@ -146,7 +146,7 @@ export default function CreateBill() {
         const formData = new FormData();
         formData.append('image', file);
 
-        const response = await fetch('/api/chat', {
+        const response = await fetch('/api/analyze', {
           method: 'POST',
           body: formData,
         });
