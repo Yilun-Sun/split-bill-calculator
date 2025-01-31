@@ -1,4 +1,4 @@
-import CreateBill from '@/components/CreateBill';
+import CreateBill from '@/components/create-bill.component';
 
 export default function Home() {
   return (
