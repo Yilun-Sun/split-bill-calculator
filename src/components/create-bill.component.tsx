@@ -41,6 +41,20 @@ export default function CreateBill() {
   const [isUploading, setIsUploading] = useState(false);
   const [editingItem, setEditingItem] = useState<Item | null>(null);
   const [editingFee, setEditingFee] = useState<ExtraFee | null>(null);
+  const [uploadingText, setUploadingText] = useState('正在识别...');
+
+  const uploadingTexts = [
+    '正在清点吮指鸡...',
+    '正在数蛋挞个数...',
+    '正在计算优惠...',
+    '正在偷吃薯条...',
+    '正在舔勺土豆泥...',
+    '正在咬一口汉堡...',
+    '正在喝可乐解渴...',
+    '正在研究配料表...',
+    '正在找优惠券...',
+    '正在偷看配方...',
+  ];
 
   // 计算订单总价
   const totalPrice = useMemo(() => {
@@ -109,6 +123,18 @@ export default function CreateBill() {
     if (!files || files.length === 0) return;
 
     setIsUploading(true);
+
+    // 设置随机的上传文案
+    const updateUploadingText = () => {
+      const randomText =
+        uploadingTexts[Math.floor(Math.random() * uploadingTexts.length)];
+      setUploadingText(randomText);
+    };
+
+    // 每 2 秒更新一次文案
+    const textInterval = setInterval(updateUploadingText, 2000);
+    updateUploadingText(); // 立即设置第一个随机文案
+
     try {
       // 清空现有数据
       setItems([]);
@@ -163,7 +189,9 @@ export default function CreateBill() {
       console.error('Upload error:', error);
       alert('上传失败，请重试');
     } finally {
+      clearInterval(textInterval);
       setIsUploading(false);
+      setUploadingText('正在识别...'); // 重置文案
     }
   };
 
@@ -226,7 +254,7 @@ export default function CreateBill() {
                   isUploading ? 'opacity-50' : ''
                 }`}
               >
-                {isUploading ? '正在识别...' : '上传账单截图'}
+                {isUploading ? uploadingText : '上传账单截图'}
               </label>
             </div>
           </div>
