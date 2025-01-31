@@ -51,6 +51,9 @@ export async function POST(request: Request) {
     );
 
     const ocrResult = (await ocrResponse.json()) as BaiduOCRResponse;
+
+    console.log('ocrResult: ', ocrResult);
+
     const text = ocrResult.words_result.map((item) => item.words).join('\n');
 
     const deepseek = new OpenAI({
@@ -162,6 +165,8 @@ ${text}
         content = content.slice(0, -3);
       }
       content = content.trim();
+
+      console.log('content: ', content);
 
       // 尝试解析 JSON
       try {
